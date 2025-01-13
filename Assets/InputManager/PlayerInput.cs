@@ -35,6 +35,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""7709f753-70b7-4b66-9d8b-b638cf360822"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeColour"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb4d7740-a771-41be-83cc-0b879a527556"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +66,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4eb710a4-806c-4439-8258-e7af99bb015f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64daf958-c0a7-473a-b435-c90b18017cde"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeColour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +97,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // GameInput
         m_GameInput = asset.FindActionMap("GameInput", throwIfNotFound: true);
         m_GameInput_Jump = m_GameInput.FindAction("Jump", throwIfNotFound: true);
+        m_GameInput_Slide = m_GameInput.FindAction("Slide", throwIfNotFound: true);
+        m_GameInput_ChangeColour = m_GameInput.FindAction("ChangeColour", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +161,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GameInput;
     private List<IGameInputActions> m_GameInputActionsCallbackInterfaces = new List<IGameInputActions>();
     private readonly InputAction m_GameInput_Jump;
+    private readonly InputAction m_GameInput_Slide;
+    private readonly InputAction m_GameInput_ChangeColour;
     public struct GameInputActions
     {
         private @PlayerInput m_Wrapper;
         public GameInputActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_GameInput_Jump;
+        public InputAction @Slide => m_Wrapper.m_GameInput_Slide;
+        public InputAction @ChangeColour => m_Wrapper.m_GameInput_ChangeColour;
         public InputActionMap Get() { return m_Wrapper.m_GameInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +182,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
+            @ChangeColour.started += instance.OnChangeColour;
+            @ChangeColour.performed += instance.OnChangeColour;
+            @ChangeColour.canceled += instance.OnChangeColour;
         }
 
         private void UnregisterCallbacks(IGameInputActions instance)
@@ -143,6 +195,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
+            @ChangeColour.started -= instance.OnChangeColour;
+            @ChangeColour.performed -= instance.OnChangeColour;
+            @ChangeColour.canceled -= instance.OnChangeColour;
         }
 
         public void RemoveCallbacks(IGameInputActions instance)
@@ -162,6 +220,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public GameInputActions @GameInput => new GameInputActions(this);
     public interface IGameInputActions
     {
+        // All the input actions created by the input system
         void OnJump(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
+        void OnChangeColour(InputAction.CallbackContext context);
     }
 }

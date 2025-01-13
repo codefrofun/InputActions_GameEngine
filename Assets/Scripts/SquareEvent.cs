@@ -1,23 +1,14 @@
 using UnityEngine;
-using static ActionInput;
+using static Actioninput;
 
 public class SquareEvent : MonoBehaviour
 {
-    public float jumpSquare = 12f; // Force of basketball, changes in inspector
+    public float jumpSquare = 4.0f; 
     public Rigidbody rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); // Giving ball ability to move
-    }
-
-    // Throw ball when you press space
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            JumpSquare(); // Calling  method that moves the ball
-        }
+        rb = GetComponent<Rigidbody>(); // Ability to jump
     }
 
     void JumpSquare()
@@ -25,31 +16,18 @@ public class SquareEvent : MonoBehaviour
         // Throw upward
         Vector3 upwardForce = Vector3.up * jumpSquare;
 
-        rb.AddForce(upwardForce, ForceMode.Impulse); // Adding forces for ball to move towards the net
+        rb.AddForce(upwardForce, ForceMode.Impulse); 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnEnable()
     {
-        if (other.CompareTag("Basket"))
-        {
-            Actioninput.InputJump?.Invoke(); // Calling / invoking the action manager action
-        }
+        // Subscribe to the action
+        Actioninput.InputJump += JumpSquare;
     }
 
-
-
-    public static void TriggerJumpStarted()
+    void OnDisable()
     {
-        OnJumpStarted?.Invoke();
-    }
-
-    public static void TriggerJumpPerformed()
-    {
-        OnJumpPerformed?.Invoke();
-    }
-
-    public static void TriggerJumpCanceled()
-    {
-        OnJumpCanceled?.Invoke();
+        // Unsubscribe from the event
+        Actioninput.InputJump -= JumpSquare;
     }
 }
