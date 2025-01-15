@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
 {
-    public PlayerInput playerInput; 
+    public PlayerInput playerInput;
+    public CancelEvent cancelEvent;  // Reference to the CancelEvent script
 
     void Awake()
     {
@@ -14,11 +15,15 @@ public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
         playerInput.GameInput.Enable();
 
         playerInput.GameInput.SetCallbacks(this); // Listener for actions and events
+        cancelEvent = GetComponent<CancelEvent>();  // Get the CancelEvent component
     }
 
     void Start()
     {
-        // Leave Empty
+        if (cancelEvent == null)
+        {
+            Debug.LogError("CancelEvent script is not attached to this GameObject.");
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -77,19 +82,25 @@ public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
 
     public void OnButtonConfirm(InputAction.CallbackContext context)
     {
+        if (cancelEvent == null)
+        {
+            Debug.LogError("CancelEvent is not initialized correctly.");
+            return;  // Avoid calling methods if cancelEvent is null
+        }
+
         if (context.started)
         {
-            Actioninput.ButtonConfirm?.Invoke(); // Starting input for button being pressed (should turn green)
+            cancelEvent.ChangeColorGreen();
         }
 
         if (context.performed)
         {
-            Actioninput.ButtonConfirm?.Invoke(); // Input is being done (should stay green whil ebutton is being held)
+            // 
         }
 
         if (context.canceled)
         {
-            Actioninput.ButtonConfirm?.Invoke(); // Input is complete (should turn red once button is let go of)
+            cancelEvent.ChangeColourRed();
         }
     }
 }
