@@ -13,9 +13,9 @@ public class CancelEvent : MonoBehaviour
         if(buttonPressed == true)
         {
             // Changes the RGB colour values
-            Color newColor = new Color(255, 48, 255);
+            Color newColor = new Color(Random.value, Random.value, Random.value);
             //renders new material
-            targetRenderer.material.color = newColor;
+            targetRenderer.material.color = Color.green;
         }
     }
 
@@ -24,9 +24,9 @@ public class CancelEvent : MonoBehaviour
         if (buttonPressed == false)
         {
             // Changes the RGB colour values
-            Color newColor = new Color(200, 0, 0);
+            Color newColor = new Color(Random.value, Random.value, Random.value);
             //renders new material
-            targetRenderer.material.color = newColor;
+            targetRenderer.material.color = Color.red;
         }
     }
 

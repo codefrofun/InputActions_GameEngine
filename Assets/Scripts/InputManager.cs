@@ -79,17 +79,17 @@ public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
     {
         if (context.started)
         {
-            Actioninput.ButtonConfirm?.Invoke(); // Starting input for colour changing
+            Actioninput.ButtonConfirm?.Invoke(); // Starting input for button being pressed (should turn green)
         }
 
         if (context.performed)
         {
-            Actioninput.ButtonConfirm?.Invoke(); // Input is being done
+            Actioninput.ButtonConfirm?.Invoke(); // Input is being done (should stay green whil ebutton is being held)
         }
 
         if (context.canceled)
         {
-            Actioninput.ButtonConfirm?.Invoke(); // Input is complete
+            Actioninput.ButtonConfirm?.Invoke(); // Input is complete (should turn red once button is let go of)
         }
     }
 }
