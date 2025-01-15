@@ -53,6 +53,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ButtonConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc29d4c3-67f5-40e8-a87a-b4faf2a41789"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +97,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeColour"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ea8c1d1-0ee3-4bac-8453-7c1f0b100271"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +119,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_GameInput_Jump = m_GameInput.FindAction("Jump", throwIfNotFound: true);
         m_GameInput_Slide = m_GameInput.FindAction("Slide", throwIfNotFound: true);
         m_GameInput_ChangeColour = m_GameInput.FindAction("ChangeColour", throwIfNotFound: true);
+        m_GameInput_ButtonConfirm = m_GameInput.FindAction("ButtonConfirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +184,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameInput_Jump;
     private readonly InputAction m_GameInput_Slide;
     private readonly InputAction m_GameInput_ChangeColour;
+    private readonly InputAction m_GameInput_ButtonConfirm;
     public struct GameInputActions
     {
         private @PlayerInput m_Wrapper;
@@ -170,6 +192,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_GameInput_Jump;
         public InputAction @Slide => m_Wrapper.m_GameInput_Slide;
         public InputAction @ChangeColour => m_Wrapper.m_GameInput_ChangeColour;
+        public InputAction @ButtonConfirm => m_Wrapper.m_GameInput_ButtonConfirm;
         public InputActionMap Get() { return m_Wrapper.m_GameInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +211,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ChangeColour.started += instance.OnChangeColour;
             @ChangeColour.performed += instance.OnChangeColour;
             @ChangeColour.canceled += instance.OnChangeColour;
+            @ButtonConfirm.started += instance.OnButtonConfirm;
+            @ButtonConfirm.performed += instance.OnButtonConfirm;
+            @ButtonConfirm.canceled += instance.OnButtonConfirm;
         }
 
         private void UnregisterCallbacks(IGameInputActions instance)
@@ -201,6 +227,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ChangeColour.started -= instance.OnChangeColour;
             @ChangeColour.performed -= instance.OnChangeColour;
             @ChangeColour.canceled -= instance.OnChangeColour;
+            @ButtonConfirm.started -= instance.OnButtonConfirm;
+            @ButtonConfirm.performed -= instance.OnButtonConfirm;
+            @ButtonConfirm.canceled -= instance.OnButtonConfirm;
         }
 
         public void RemoveCallbacks(IGameInputActions instance)
@@ -220,9 +249,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public GameInputActions @GameInput => new GameInputActions(this);
     public interface IGameInputActions
     {
-        // All the input actions created by the input system
         void OnJump(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
         void OnChangeColour(InputAction.CallbackContext context);
+        void OnButtonConfirm(InputAction.CallbackContext context);
     }
 }

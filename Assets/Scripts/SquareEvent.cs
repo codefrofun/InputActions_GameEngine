@@ -3,7 +3,7 @@ using static Actioninput;
 
 public class SquareEvent : MonoBehaviour
 {
-    public float jumpSquare = 4.0f; 
+    public float jumpSquare = 1.5f; 
     public Rigidbody rb;
 
     void Start()

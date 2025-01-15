@@ -9,4 +9,8 @@ public static class Actioninput
     public static Action SlideTheCapsule; // Roll/slide to the right action with d
 
     public static Action SphereColourChange; // Change sphere colour with tab
+
+    public static Action CancelSlideTheCapsule; // Capsule Stops Sliding
+
+    public static Action ButtonConfirm; 
 }

@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
 
     void Awake()
     {
-        // CReating instance of player
+        // Creating instance of player
         playerInput = new PlayerInput();
         playerInput.GameInput.Enable();
 
@@ -72,6 +72,24 @@ public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
         if (context.canceled)
         {
             Actioninput.SphereColourChange?.Invoke(); // Input is complete
+        }
+    }
+
+    public void OnButtonConfirm(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Actioninput.ButtonConfirm?.Invoke(); // Starting input for colour changing
+        }
+
+        if (context.performed)
+        {
+            Actioninput.ButtonConfirm?.Invoke(); // Input is being done
+        }
+
+        if (context.canceled)
+        {
+            Actioninput.ButtonConfirm?.Invoke(); // Input is complete
         }
     }
 }

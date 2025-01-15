@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ButtonConfirm",
+                    "type": "Button",
+                    "id": "dc29d4c3-67f5-40e8-a87a-b4faf2a41789",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangeColour",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5ea8c1d1-0ee3-4bac-8453-7c1f0b100271",
+                    "path": "<Keyboard>/d",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonConfirm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
