@@ -90,17 +90,17 @@ public class InputManager : MonoBehaviour, PlayerInput.IGameInputActions
 
         if (context.started)
         {
-            cancelEvent.ChangeColorGreen();
+            cancelEvent.ChangeColorGreen(); // Turn color green when button is released
         }
 
         if (context.performed)
         {
-            // 
+            // Input is being done
         }
 
         if (context.canceled)
         {
-            cancelEvent.ChangeColourRed();
+            cancelEvent.ChangeColourRed(); // Turn color red when button is released
         }
     }
 }

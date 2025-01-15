@@ -14,7 +14,7 @@ public class CancelEvent : MonoBehaviour
         {
             //renders new material
             targetRenderer.material.color = Color.green;
-            buttonPressed = true;
+            buttonPressed = true; // Mark button as pressed
         }
     }
 
@@ -24,7 +24,7 @@ public class CancelEvent : MonoBehaviour
         {
             //renders new material
             targetRenderer.material.color = Color.red;
-            buttonPressed = false;
+            buttonPressed = false;  // Mark button as released
         }
     }
 }
